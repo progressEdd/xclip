@@ -83,26 +83,26 @@ Which phases cover which requirements. Updated during roadmap creation.
 | BACKEND-02  | Phase 1 | Pending |
 | BACKEND-03  | Phase 1 | Pending |
 | BACKEND-04  | Phase 1 | Pending |
-| CLIP-01     | Phase 1 | Pending |
-| CLIP-02     | Phase 1 | Pending |
-| CLIP-03     | Phase 1 | Pending |
-| CLIP-04     | Phase 1 | Pending |
+| CLIP-01     | Phase 2 | Pending |
+| CLIP-02     | Phase 2 | Pending |
+| CLIP-03     | Phase 2 | Pending |
+| CLIP-04     | Phase 2 | Pending |
 | LOG-01      | Phase 1 | Pending |
 | LOG-02      | Phase 1 | Pending |
 | LOG-03      | Phase 1 | Pending |
 | LOG-04      | Phase 1 | Pending |
-| COMPAT-01   | Phase 1 | Pending |
-| COMPAT-02   | Phase 1 | Pending |
-| COMPAT-03   | Phase 1 | Pending |
-| COMPAT-04   | Phase 1 | Pending |
+| COMPAT-01   | Phase 3 | Pending |
+| COMPAT-02   | Phase 3 | Pending |
+| COMPAT-03   | Phase 3 | Pending |
+| COMPAT-04   | Phase 3 | Pending |
 
 **Coverage:**
 
 - v1 requirements: 20 total
-- Mapped to phases: 0
-- Unmapped: 20 ⚠️
+- Mapped to phases: 20
+- Unmapped: 0 ✓
 
 ---
 
 _Requirements defined: 2026-03-06_
-_Last updated: 2026-03-06 after initial definition_
+_Last updated: 2026-03-06 after roadmap creation_
