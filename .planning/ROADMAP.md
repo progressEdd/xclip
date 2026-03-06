@@ -31,11 +31,12 @@ Decimal phases appear between their surrounding integers in numeric order.
 3. Library selects wl-copy backend when Wayland is detected and wl-copy is available
 4. Library falls back to xclip when Wayland is detected but wl-copy is not installed
 5. Library logs which display server and clipboard backend were selected for troubleshooting
-   **Plans**: TBD
+   **Plans**: 2 plans in 2 waves
 
 Plans:
 
-- [ ] 01-01: Plan to be created
+- [ ] 01-01: Display server detection and tool availability (Wave 1)
+- [ ] 01-02: Wayland clipboard and backend selection (Wave 2)
 
 ### Phase 2: Wayland Clipboard Implementation
 
@@ -78,6 +79,6 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase                               | Plans Complete | Status      | Completed |
 | ----------------------------------- | -------------- | ----------- | --------- |
-| 1. Detection & Backend Selection    | 0/1            | Not started | -         |
+| 1. Detection & Backend Selection    | 0/2            | Not started | -         |
 | 2. Wayland Clipboard Implementation | 0/1            | Not started | -         |
 | 3. Validation & Compatibility       | 0/1            | Not started | -         |
