@@ -7,6 +7,7 @@ import { Win32Clipboard } from "./clipboard/win32";
 import { WslClipboard } from "./clipboard/wsl";
 import { LinuxClipboard } from "./clipboard/linux";
 import { DarwinClipboard } from "./clipboard/darwin";
+import { WaylandClipboard } from "./clipboard/wayland";
 
 export type Platform = "darwin" | "win32" | "win10" | "linux" | "wsl";
 export type DisplayServer = "wayland" | "x11" | "unknown";
@@ -228,7 +229,36 @@ class WslShell implements IShell {
 
 class LinuxShell implements IShell {
   getClipboard(): IClipboard {
-    return new LinuxClipboard();
+    const displayServer = detectDisplayServer();
+
+    if (displayServer === "wayland") {
+      if (isToolAvailable("wl-copy")) {
+        console.debug("[xclip] Selected wl-copy backend for Wayland");
+        return new WaylandClipboard();
+      } else if (isToolAvailable("xclip")) {
+        console.debug(
+          "[xclip] Warning: Wayland detected but wl-copy not found, falling back to xclip (XWayland)"
+        );
+        console.debug(
+          "[xclip] For best Wayland support, install wl-clipboard: apt install wl-clipboard"
+        );
+        return new LinuxClipboard();
+      } else {
+        throw new Error(
+          "No clipboard tool available. Install wl-clipboard (recommended for Wayland) or xclip."
+        );
+      }
+    }
+
+    // X11
+    if (isToolAvailable("xclip")) {
+      console.debug("[xclip] Selected xclip backend for X11");
+      return new LinuxClipboard();
+    }
+
+    throw new Error(
+      "xclip not installed. Install with: apt install xclip (or pacman -S xclip)"
+    );
   }
   async runScript(script: string, parameters: string[]): Promise<string> {
     const shell = "sh";
