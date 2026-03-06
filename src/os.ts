@@ -28,7 +28,7 @@ export function detectDisplayServer(): DisplayServer {
   if (process.env.WAYLAND_DISPLAY) {
     cachedDisplayServer = "wayland";
     console.debug(
-      `[xclip] Detected Wayland via WAYLAND_DISPLAY=${process.env.WAYLAND_DISPLAY}`,
+      `[xclip] Detected Wayland via WAYLAND_DISPLAY=${process.env.WAYLAND_DISPLAY}`
     );
     return cachedDisplayServer;
   }
@@ -38,7 +38,7 @@ export function detectDisplayServer(): DisplayServer {
   if (sessionType === "wayland") {
     cachedDisplayServer = "wayland";
     console.debug(
-      `[xclip] Detected Wayland via XDG_SESSION_TYPE=${sessionType}`,
+      `[xclip] Detected Wayland via XDG_SESSION_TYPE=${sessionType}`
     );
     return cachedDisplayServer;
   }
@@ -111,7 +111,7 @@ export function getShell(): IShell {
 export function runCommand(
   shell: string,
   options: string[],
-  timeout = 10000,
+  timeout = 10000
 ): Promise<string> {
   return new Promise((resolve, reject) => {
     let errorTriggered = false;
