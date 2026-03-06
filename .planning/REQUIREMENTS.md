@@ -16,10 +16,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Clipboard Backend Selection
 
-- [ ] **BACKEND-01**: System selects wl-copy backend when Wayland is detected
-- [ ] **BACKEND-02**: System selects xclip backend when X11 is detected
-- [ ] **BACKEND-03**: System falls back to xclip if Wayland detected but wl-copy not installed
-- [ ] **BACKEND-04**: System reports clear error if neither tool is available
+- [x] **BACKEND-01**: System selects wl-copy backend when Wayland is detected
+- [x] **BACKEND-02**: System selects xclip backend when X11 is detected
+- [x] **BACKEND-03**: System falls back to xclip if Wayland detected but wl-copy not installed
+- [x] **BACKEND-04**: System reports clear error if neither tool is available
 
 ### Clipboard Operations
 
@@ -31,8 +31,8 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Logging and Diagnostics
 
 - [x] **LOG-01**: System logs which display server was detected (Wayland/X11)
-- [ ] **LOG-02**: System logs which clipboard backend was selected (wl-copy/xclip)
-- [ ] **LOG-03**: System logs fallback events when expected tool not available
+- [x] **LOG-02**: System logs which clipboard backend was selected (wl-copy/xclip)
+- [x] **LOG-03**: System logs fallback events when expected tool not available
 - [x] **LOG-04**: Logs are verbose enough for troubleshooting but not overwhelming
 
 ### Compatibility
@@ -79,17 +79,17 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DETECT-02   | Phase 1 | Complete |
 | DETECT-03   | Phase 1 | Complete |
 | DETECT-04   | Phase 1 | Complete |
-| BACKEND-01  | Phase 1 | Pending |
-| BACKEND-02  | Phase 1 | Pending |
-| BACKEND-03  | Phase 1 | Pending |
-| BACKEND-04  | Phase 1 | Pending |
+| BACKEND-01  | Phase 1 | Complete |
+| BACKEND-02  | Phase 1 | Complete |
+| BACKEND-03  | Phase 1 | Complete |
+| BACKEND-04  | Phase 1 | Complete |
 | CLIP-01     | Phase 2 | Pending |
 | CLIP-02     | Phase 2 | Pending |
 | CLIP-03     | Phase 2 | Pending |
 | CLIP-04     | Phase 2 | Pending |
 | LOG-01      | Phase 1 | Complete |
-| LOG-02      | Phase 1 | Pending |
-| LOG-03      | Phase 1 | Pending |
+| LOG-02      | Phase 1 | Complete |
+| LOG-03      | Phase 1 | Complete |
 | LOG-04      | Phase 1 | Complete |
 | COMPAT-01   | Phase 3 | Pending |
 | COMPAT-02   | Phase 3 | Pending |
