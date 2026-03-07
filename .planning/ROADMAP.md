@@ -37,7 +37,7 @@ Plans:
 
 - [x] 01-01: Display server detection and tool availability (Wave 1)
 - [x] 01-02: Wayland clipboard and backend selection (Wave 2)
-- [ ] 01-03: Fix backend selection test mocking strategy (Wave 3 - gap closure)
+- [x] 01-03: Fix backend selection test mocking strategy (Wave 3 - gap closure)
 
 ### Phase 2: Wayland Clipboard Implementation
 
