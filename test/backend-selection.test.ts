@@ -197,10 +197,7 @@ describe("Backend Selection Logic", () => {
 
   describe("LinuxShell.getClipboard backend selection", () => {
     it("should return WaylandClipboard when Wayland detected and wl-copy available", () => {
-      jest.resetModules();
-
-      process.env = { ...originalEnv, WAYLAND_DISPLAY: "wayland-0" };
-
+      // Set up mock BEFORE resetting modules or requiring
       spawnSyncMock.mockImplementation((cmd: string, args: string[]) => {
         if (cmd === "command" && args[0] === "-v") {
           if (args[1] === "wl-copy" || args[1] === "wl-paste") {
@@ -211,6 +208,13 @@ describe("Backend Selection Logic", () => {
         return { status: 0, stdout: "", stderr: "" };
       });
 
+      // Set environment
+      process.env = { ...originalEnv, WAYLAND_DISPLAY: "wayland-0" };
+
+      // Reset modules AFTER mock is set up to clear cached display server
+      jest.resetModules();
+
+      // Require module - mock will intercept calls
       const { getShell } = require("../src/os");
       const shell = getShell();
       const clipboard = shell.getClipboard();
@@ -222,12 +226,7 @@ describe("Backend Selection Logic", () => {
     });
 
     it("should return LinuxClipboard when X11 detected and xclip available", () => {
-      jest.resetModules();
-
-      process.env = { ...originalEnv };
-      delete process.env.WAYLAND_DISPLAY;
-      delete process.env.XDG_SESSION_TYPE;
-
+      // Set up mock BEFORE resetting modules
       spawnSyncMock.mockImplementation((cmd: string, args: string[]) => {
         if (cmd === "command" && args[0] === "-v") {
           if (args[1] === "xclip") {
@@ -237,6 +236,14 @@ describe("Backend Selection Logic", () => {
         }
         return { status: 0, stdout: "", stderr: "" };
       });
+
+      // Set environment for X11
+      process.env = { ...originalEnv };
+      delete process.env.WAYLAND_DISPLAY;
+      delete process.env.XDG_SESSION_TYPE;
+
+      // Reset modules AFTER mock is set up
+      jest.resetModules();
 
       const { getShell } = require("../src/os");
       const shell = getShell();
@@ -249,10 +256,7 @@ describe("Backend Selection Logic", () => {
     });
 
     it("should fallback to xclip with warning when Wayland detected but wl-copy unavailable", () => {
-      jest.resetModules();
-
-      process.env = { ...originalEnv, WAYLAND_DISPLAY: "wayland-0" };
-
+      // Set up mock BEFORE resetting modules
       spawnSyncMock.mockImplementation((cmd: string, args: string[]) => {
         if (cmd === "command" && args[0] === "-v") {
           if (args[1] === "wl-copy" || args[1] === "wl-paste") {
@@ -264,6 +268,12 @@ describe("Backend Selection Logic", () => {
         }
         return { status: 0, stdout: "", stderr: "" };
       });
+
+      // Set environment for Wayland
+      process.env = { ...originalEnv, WAYLAND_DISPLAY: "wayland-0" };
+
+      // Reset modules AFTER mock is set up
+      jest.resetModules();
 
       const { getShell } = require("../src/os");
       const shell = getShell();
@@ -281,16 +291,19 @@ describe("Backend Selection Logic", () => {
     });
 
     it("should throw clear error when neither tool available", () => {
-      jest.resetModules();
-
-      process.env = { ...originalEnv, WAYLAND_DISPLAY: "wayland-0" };
-
+      // Set up mock BEFORE resetting modules
       spawnSyncMock.mockImplementation((cmd: string, args: string[]) => {
         if (cmd === "command" && args[0] === "-v") {
           return { status: 1, stdout: "", stderr: "command not found" };
         }
         return { status: 0, stdout: "", stderr: "" };
       });
+
+      // Set environment for Wayland
+      process.env = { ...originalEnv, WAYLAND_DISPLAY: "wayland-0" };
+
+      // Reset modules AFTER mock is set up
+      jest.resetModules();
 
       const { getShell } = require("../src/os");
 
@@ -301,10 +314,7 @@ describe("Backend Selection Logic", () => {
     });
 
     it("should log backend selection for troubleshooting", () => {
-      jest.resetModules();
-
-      process.env = { ...originalEnv, WAYLAND_DISPLAY: "wayland-0" };
-
+      // Set up mock BEFORE resetting modules
       spawnSyncMock.mockImplementation((cmd: string, args: string[]) => {
         if (cmd === "command" && args[0] === "-v") {
           if (args[1] === "wl-copy" || args[1] === "wl-paste") {
@@ -313,6 +323,12 @@ describe("Backend Selection Logic", () => {
         }
         return { status: 0, stdout: "", stderr: "" };
       });
+
+      // Set environment for Wayland
+      process.env = { ...originalEnv, WAYLAND_DISPLAY: "wayland-0" };
+
+      // Reset modules AFTER mock is set up
+      jest.resetModules();
 
       const { getShell } = require("../src/os");
       const shell = getShell();
@@ -324,10 +340,7 @@ describe("Backend Selection Logic", () => {
     });
 
     it("should log fallback events with install instructions", () => {
-      jest.resetModules();
-
-      process.env = { ...originalEnv, WAYLAND_DISPLAY: "wayland-0" };
-
+      // Set up mock BEFORE resetting modules
       spawnSyncMock.mockImplementation((cmd: string, args: string[]) => {
         if (cmd === "command" && args[0] === "-v") {
           if (args[1] === "wl-copy" || args[1] === "wl-paste") {
@@ -339,6 +352,12 @@ describe("Backend Selection Logic", () => {
         }
         return { status: 0, stdout: "", stderr: "" };
       });
+
+      // Set environment for Wayland
+      process.env = { ...originalEnv, WAYLAND_DISPLAY: "wayland-0" };
+
+      // Reset modules AFTER mock is set up
+      jest.resetModules();
 
       const { getShell } = require("../src/os");
       const shell = getShell();
