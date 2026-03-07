@@ -31,12 +31,13 @@ Decimal phases appear between their surrounding integers in numeric order.
 3. Library selects wl-copy backend when Wayland is detected and wl-copy is available
 4. Library falls back to xclip when Wayland is detected but wl-copy is not installed
 5. Library logs which display server and clipboard backend were selected for troubleshooting
-   **Plans**: 2 plans in 2 waves
+   **Plans**: 3 plans in 3 waves
 
 Plans:
 
-- [ ] 01-01: Display server detection and tool availability (Wave 1)
-- [ ] 01-02: Wayland clipboard and backend selection (Wave 2)
+- [x] 01-01: Display server detection and tool availability (Wave 1)
+- [x] 01-02: Wayland clipboard and backend selection (Wave 2)
+- [ ] 01-03: Fix backend selection test mocking strategy (Wave 3 - gap closure)
 
 ### Phase 2: Wayland Clipboard Implementation
 
