@@ -4,9 +4,9 @@ A crossplatform clipboard tools for copy & paste text, html and image.
 
 ## Requirements
 
-- Linux: `xclip` (X11) or `wl-copy`/`wl-paste` (Wayland)
-- Win32: `powershell`
-- Mac: `pbpaste`
+- `xclip`/`wl-clipboard` command be required (Linux)
+- `powershell` command be required (Win32)
+- `pbpaste` command be required (Mac)
 
 ## Install dependencies
 
@@ -19,13 +19,13 @@ npm i xclip --save
 ## Usage
 
 ```ts
-import xclip from "xclip";
+import xclip from 'xclip'
 
 const shell = xclip.getShell();
 const cb = shell.getClipboard();
 const cbtype = await cb.getContentType();
 
-switch (cbtype) {
+switch(cbtype) {
   case xclip.ClipboardType.Html:
     const html = await cb.getTextHtml();
     break;
