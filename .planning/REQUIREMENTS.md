@@ -23,10 +23,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Clipboard Operations
 
-- [ ] **CLIP-01**: wl-copy backend supports text clipboard operations (copy/paste plain text)
-- [ ] **CLIP-02**: wl-copy backend supports HTML clipboard operations (copy/paste HTML)
-- [ ] **CLIP-03**: wl-copy backend supports image clipboard operations (copy/paste PNG)
-- [ ] **CLIP-04**: All clipboard operations maintain same interface as existing xclip implementation
+- [x] **CLIP-01**: wl-copy backend supports text clipboard operations (copy/paste plain text)
+- [x] **CLIP-02**: wl-copy backend supports HTML clipboard operations (copy/paste HTML)
+- [x] **CLIP-03**: wl-copy backend supports image clipboard operations (copy/paste PNG)
+- [x] **CLIP-04**: All clipboard operations maintain same interface as existing xclip implementation
 
 ### Logging and Diagnostics
 
@@ -83,10 +83,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | BACKEND-02  | Phase 1 | Complete |
 | BACKEND-03  | Phase 1 | Complete |
 | BACKEND-04  | Phase 1 | Complete |
-| CLIP-01     | Phase 2 | Pending |
-| CLIP-02     | Phase 2 | Pending |
-| CLIP-03     | Phase 2 | Pending |
-| CLIP-04     | Phase 2 | Pending |
+| CLIP-01     | Phase 2 | Complete |
+| CLIP-02     | Phase 2 | Complete |
+| CLIP-03     | Phase 2 | Complete |
+| CLIP-04     | Phase 2 | Complete |
 | LOG-01      | Phase 1 | Complete |
 | LOG-02      | Phase 1 | Complete |
 | LOG-03      | Phase 1 | Complete |
