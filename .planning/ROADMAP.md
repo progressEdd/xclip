@@ -15,7 +15,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [ ] **Phase 1: Detection & Backend Selection** - Detect Wayland vs X11 display servers and select appropriate clipboard backend with logging
 - [ ] **Phase 2: Wayland Clipboard Implementation** - Implement clipboard operations using wl-copy backend for Wayland systems
-- [ ] **Phase 3: Validation & Compatibility** - Verify no breaking changes and ensure existing consumers continue working
+- [ ] **Phase 3: Unified Linux Clipboard** - Consolidate LinuxClipboard and WaylandClipboard into single unified class
+- [ ] **Phase 4: Validation & Compatibility** - Verify no breaking changes and ensure existing consumers continue working
 
 ## Phase Details
 
@@ -56,10 +57,29 @@ Plans:
 
 - [ ] 02-01: Rename Linux scripts to tool-specific naming (xclip*\* and wl_clipboard*\*)
 
-### Phase 3: Validation & Compatibility
+### Phase 3: Unified Linux Clipboard
+
+**Goal**: Single LinuxClipboard class handles both X11 (xclip) and Wayland (wl-clipboard) backends internally
+**Depends on**: Phase 2
+**Requirements**: CLIP-01, CLIP-02, CLIP-03, CLIP-04
+**Success Criteria** (what must be TRUE):
+
+1. LinuxClipboard class handles both X11 and Wayland display servers
+2. Backend selection happens automatically at construction time
+3. wayland.ts file is deleted
+4. os.ts simplified to return LinuxClipboard without selection logic
+5. All tests pass with unified implementation
+
+**Plans**: 1 plan in 1 wave
+
+Plans:
+
+- [ ] 03-01: Consolidate LinuxClipboard and WaylandClipboard into unified class
+
+### Phase 4: Validation & Compatibility
 
 **Goal**: Existing consumers experience no disruption from Wayland support additions
-**Depends on**: Phase 2
+**Depends on**: Phase 3
 **Requirements**: COMPAT-01, COMPAT-02, COMPAT-03, COMPAT-04
 **Success Criteria** (what must be TRUE):
 
@@ -67,19 +87,21 @@ Plans:
 2. vscode-markdown-paste-image extension works without any code changes
 3. X11 users experience identical behavior to previous library version
 4. No breaking changes to public API surface
-   **Plans**: TBD
+
+**Plans**: TBD
 
 Plans:
 
-- [ ] 03-01: Plan to be created
+- [ ] 04-01: Plan to be created
 
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3
+Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase                               | Plans Complete | Status      | Completed  |
 | ----------------------------------- | -------------- | ----------- | ---------- |
 | 1. Detection & Backend Selection    | 3/3            | Complete    | 2026-03-07 |
-| 2. Wayland Clipboard Implementation | 0/1            | Not started | -          |
-| 3. Validation & Compatibility       | 0/1            | Not started | -          |
+| 2. Wayland Clipboard Implementation | 1/1            | Complete    | 2026-03-08 |
+| 3. Unified Linux Clipboard          | 0/1            | Not started | -          |
+| 4. Validation & Compatibility       | 0/1            | Not started | -          |
