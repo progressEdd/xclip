@@ -50,11 +50,11 @@ Plans:
 2. User can copy and paste HTML content on Wayland systems using wl-copy backend
 3. User can copy and paste PNG images on Wayland systems using wl-copy backend
 4. All clipboard operations use the same interface as existing xclip implementation
-   **Plans**: TBD
+   **Plans**: 1 plan in 1 wave
 
 Plans:
 
-- [ ] 02-01: Plan to be created
+- [ ] 02-01: Rename Linux scripts to tool-specific naming (xclip*\* and wl_clipboard*\*)
 
 ### Phase 3: Validation & Compatibility
 
@@ -78,8 +78,8 @@ Plans:
 **Execution Order:**
 Phases execute in numeric order: 1 → 2 → 3
 
-| Phase                               | Plans Complete | Status      | Completed |
-| ----------------------------------- | -------------- | ----------- | --------- |
-| 1. Detection & Backend Selection    | 0/2            | Not started | -         |
-| 2. Wayland Clipboard Implementation | 0/1            | Not started | -         |
-| 3. Validation & Compatibility       | 0/1            | Not started | -         |
+| Phase                               | Plans Complete | Status      | Completed  |
+| ----------------------------------- | -------------- | ----------- | ---------- |
+| 1. Detection & Backend Selection    | 3/3            | Complete    | 2026-03-07 |
+| 2. Wayland Clipboard Implementation | 0/1            | Not started | -          |
+| 3. Validation & Compatibility       | 0/1            | Not started | -          |
