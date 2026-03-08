@@ -67,10 +67,6 @@ class WaylandClipboard extends BaseClipboard {
 
     for (const type of types) {
       switch (type) {
-        case "no wl-paste":
-          console.error("You need to install wl-clipboard package first.");
-          detectedTypes.add(ClipboardType.Unknown);
-          return detectedTypes;
         case "image/png":
           detectedTypes.add(ClipboardType.Image);
           break;
@@ -93,11 +89,17 @@ class WaylandClipboard extends BaseClipboard {
     );
     try {
       const shell = getShell();
+      console.debug("[wayland] Running script:", script);
       const data = await shell.runScript(script);
-      console.debug("getClipboardContentType", data);
+      console.debug("[wayland] Script output:", data);
       const types = data.split(/\r\n|\n|\r/);
-      return this.detectType(types);
+      console.debug("[wayland] Parsed types:", types);
+      const result = this.detectType(types);
+      console.debug("[wayland] Detected:", result);
+      return result;
     } catch (e) {
+      const errorMsg = e instanceof Error ? e.message : String(e);
+      console.error("[wayland] getContentType error:", errorMsg);
       return ClipboardType.Unknown;
     }
   }

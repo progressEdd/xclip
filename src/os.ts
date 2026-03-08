@@ -137,7 +137,14 @@ export function runCommand(
         if (code === 0) {
           resolve(output);
         } else {
-          reject(errorMessage);
+          // Include both stdout and stderr in error message for better diagnostics
+          const errorParts = [];
+          if (errorMessage) errorParts.push(errorMessage);
+          if (output) errorParts.push(`stdout: ${output}`);
+          const fullError = errorParts.length > 0 
+            ? errorParts.join("\n") 
+            : `Command exited with code ${code} (no output)`;
+          reject(new Error(fullError));
         }
       }
     });
