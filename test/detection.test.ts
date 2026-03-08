@@ -28,12 +28,12 @@ describe("Display Server Detection", () => {
       process.env = { ...originalEnv, WAYLAND_DISPLAY: "wayland-0" };
 
       // Re-import to get fresh module state
-      const { detectDisplayServer: detect } = require("../src/os");
+      const { detectDisplayServer: detect } = require("../src/clipboard/linux");
       const result = detect();
 
       expect(result).toBe("wayland");
       expect(consoleDebugSpy).toHaveBeenCalledWith(
-        expect.stringContaining("Detected Wayland via WAYLAND_DISPLAY"),
+        expect.stringContaining("Detected Wayland via WAYLAND_DISPLAY")
       );
     });
 
@@ -47,12 +47,12 @@ describe("Display Server Detection", () => {
       };
       delete process.env.WAYLAND_DISPLAY;
 
-      const { detectDisplayServer: detect } = require("../src/os");
+      const { detectDisplayServer: detect } = require("../src/clipboard/linux");
       const result = detect();
 
       expect(result).toBe("wayland");
       expect(consoleDebugSpy).toHaveBeenCalledWith(
-        expect.stringContaining("Detected Wayland via XDG_SESSION_TYPE"),
+        expect.stringContaining("Detected Wayland via XDG_SESSION_TYPE")
       );
     });
 
@@ -64,12 +64,12 @@ describe("Display Server Detection", () => {
       delete process.env.WAYLAND_DISPLAY;
       delete process.env.XDG_SESSION_TYPE;
 
-      const { detectDisplayServer: detect } = require("../src/os");
+      const { detectDisplayServer: detect } = require("../src/clipboard/linux");
       const result = detect();
 
       expect(result).toBe("x11");
       expect(consoleDebugSpy).toHaveBeenCalledWith(
-        expect.stringContaining("Detected X11"),
+        expect.stringContaining("Detected X11")
       );
     });
 
@@ -79,7 +79,7 @@ describe("Display Server Detection", () => {
       // Set WAYLAND_DISPLAY
       process.env = { ...originalEnv, WAYLAND_DISPLAY: "wayland-0" };
 
-      const { detectDisplayServer: detect } = require("../src/os");
+      const { detectDisplayServer: detect } = require("../src/clipboard/linux");
 
       // First call
       const result1 = detect();
@@ -129,7 +129,7 @@ describe("Tool Availability Checking", () => {
         expect.objectContaining({
           shell: true,
           encoding: "utf-8",
-        }),
+        })
       );
     });
 

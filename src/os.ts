@@ -9,45 +9,6 @@ import { LinuxClipboard } from "./clipboard/linux";
 import { DarwinClipboard } from "./clipboard/darwin";
 
 export type Platform = "darwin" | "win32" | "win10" | "linux" | "wsl";
-export type DisplayServer = "wayland" | "x11" | "unknown";
-
-// Module-level cache (eager initialization per CONTEXT.md decision)
-let cachedDisplayServer: DisplayServer | null = null;
-
-/**
- * Detect display server (Wayland or X11) from environment variables.
- * Result is cached at first call and persists for process lifetime.
- * @returns "wayland" | "x11" | "unknown"
- */
-export function detectDisplayServer(): DisplayServer {
-  if (cachedDisplayServer !== null) {
-    return cachedDisplayServer;
-  }
-
-  // Primary: Check WAYLAND_DISPLAY (per RESEARCH.md Pattern 1)
-  if (process.env.WAYLAND_DISPLAY) {
-    cachedDisplayServer = "wayland";
-    console.debug(
-      `[xclip] Detected Wayland via WAYLAND_DISPLAY=${process.env.WAYLAND_DISPLAY}`
-    );
-    return cachedDisplayServer;
-  }
-
-  // Secondary: Check XDG_SESSION_TYPE
-  const sessionType = process.env.XDG_SESSION_TYPE;
-  if (sessionType === "wayland") {
-    cachedDisplayServer = "wayland";
-    console.debug(
-      `[xclip] Detected Wayland via XDG_SESSION_TYPE=${sessionType}`
-    );
-    return cachedDisplayServer;
-  }
-
-  // Default to X11
-  cachedDisplayServer = "x11";
-  console.debug(`[xclip] Detected X11 (no Wayland indicators found)`);
-  return cachedDisplayServer;
-}
 
 /**
  * Check if a command-line tool is available in the system PATH.
