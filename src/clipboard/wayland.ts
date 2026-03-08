@@ -13,7 +13,7 @@ class WaylandClipboard extends BaseClipboard {
     const script = path.join(
       __dirname,
       this.SCRIPT_PATH,
-      "wayland_set_clipboard_png.sh"
+      "wl_clipboard_set_clipboard_png.sh",
     );
     const params = [imageFilePath];
 
@@ -31,7 +31,7 @@ class WaylandClipboard extends BaseClipboard {
     const script = path.join(
       __dirname,
       this.SCRIPT_PATH,
-      "wayland_set_clipboard_text_plain.sh"
+      "wl_clipboard_set_clipboard_text_plain.sh",
     );
     const params = [textFilePath];
 
@@ -49,7 +49,7 @@ class WaylandClipboard extends BaseClipboard {
     const script = path.join(
       __dirname,
       this.SCRIPT_PATH,
-      "wayland_set_clipboard_text_html.sh"
+      "wl_clipboard_set_clipboard_text_html.sh",
     );
     const params = [htmlFilePath];
 
@@ -85,7 +85,7 @@ class WaylandClipboard extends BaseClipboard {
     const script = path.join(
       __dirname,
       this.SCRIPT_PATH,
-      "wayland_get_clipboard_content_type.sh"
+      "wl_clipboard_get_clipboard_content_type.sh",
     );
     try {
       const shell = getShell();
@@ -109,7 +109,7 @@ class WaylandClipboard extends BaseClipboard {
     const script = path.join(
       __dirname,
       this.SCRIPT_PATH,
-      "wayland_save_clipboard_png.sh"
+      "wl_clipboard_save_clipboard_png.sh",
     );
     const shell = getShell();
     const data: string = await shell.runScript(script, [imagePath]);
@@ -120,7 +120,7 @@ class WaylandClipboard extends BaseClipboard {
     const script = path.join(
       __dirname,
       this.SCRIPT_PATH,
-      "wayland_get_clipboard_text_plain.sh"
+      "wl_clipboard_get_clipboard_text_plain.sh",
     );
     const shell = getShell();
     const data: string = await shell.runScript(script);
@@ -131,7 +131,7 @@ class WaylandClipboard extends BaseClipboard {
     const script = path.join(
       __dirname,
       this.SCRIPT_PATH,
-      "wayland_get_clipboard_text_html.sh"
+      "wl_clipboard_get_clipboard_text_html.sh",
     );
     const shell = getShell();
     const data: string = await shell.runScript(script);

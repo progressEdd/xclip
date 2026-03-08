@@ -13,7 +13,7 @@ class LinuxClipboard extends BaseClipboard {
     const script = path.join(
       __dirname,
       this.SCRIPT_PATH,
-      "linux_set_clipboard_png.sh"
+      "xclip_set_clipboard_png.sh",
     );
     const params = [imageFilePath];
 
@@ -30,7 +30,7 @@ class LinuxClipboard extends BaseClipboard {
     const script = path.join(
       __dirname,
       this.SCRIPT_PATH,
-      "linux_set_clipboard_text_plain.sh"
+      "xclip_set_clipboard_text_plain.sh",
     );
     const params = [textFilePath];
 
@@ -47,7 +47,7 @@ class LinuxClipboard extends BaseClipboard {
     const script = path.join(
       __dirname,
       this.SCRIPT_PATH,
-      "linux_set_clipboard_text_html.sh"
+      "xclip_set_clipboard_text_html.sh",
     );
     const params = [htmlFilePath];
 
@@ -86,7 +86,7 @@ class LinuxClipboard extends BaseClipboard {
     const script = path.join(
       __dirname,
       this.SCRIPT_PATH,
-      "linux_get_clipboard_content_type.sh"
+      "xclip_get_clipboard_content_type.sh",
     );
     try {
       const shell = getShell();
@@ -105,7 +105,7 @@ class LinuxClipboard extends BaseClipboard {
     const script = path.join(
       __dirname,
       this.SCRIPT_PATH,
-      "linux_save_clipboard_png.sh"
+      "xclip_save_clipboard_png.sh",
     );
     const shell = getShell();
     const data: string = await shell.runScript(script, [imagePath]);
@@ -116,7 +116,7 @@ class LinuxClipboard extends BaseClipboard {
     const script = path.join(
       __dirname,
       this.SCRIPT_PATH,
-      "linux_get_clipboard_text_plain.sh"
+      "xclip_get_clipboard_text_plain.sh",
     );
     const shell = getShell();
     const data: string = await shell.runScript(script);
@@ -127,7 +127,7 @@ class LinuxClipboard extends BaseClipboard {
     const script = path.join(
       __dirname,
       this.SCRIPT_PATH,
-      "linux_get_clipboard_text_html.sh"
+      "xclip_get_clipboard_text_html.sh",
     );
     const shell = getShell();
     const data: string = await shell.runScript(script);
