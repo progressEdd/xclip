@@ -1,5 +1,5 @@
 import * as os from "os";
-import { spawn } from "child_process";
+import { spawn, spawnSync } from "child_process";
 import isWsl from "is-wsl";
 import { IClipboard } from "./clipboard_interface";
 import { Win10Clipboard } from "./clipboard/win10";
@@ -7,8 +7,65 @@ import { Win32Clipboard } from "./clipboard/win32";
 import { WslClipboard } from "./clipboard/wsl";
 import { LinuxClipboard } from "./clipboard/linux";
 import { DarwinClipboard } from "./clipboard/darwin";
+import { WaylandClipboard } from "./clipboard/wayland";
 
 export type Platform = "darwin" | "win32" | "win10" | "linux" | "wsl";
+export type DisplayServer = "wayland" | "x11" | "unknown";
+
+// Module-level cache (eager initialization per CONTEXT.md decision)
+let cachedDisplayServer: DisplayServer | null = null;
+
+/**
+ * Detect display server (Wayland or X11) from environment variables.
+ * Result is cached at first call and persists for process lifetime.
+ * @returns "wayland" | "x11" | "unknown"
+ */
+export function detectDisplayServer(): DisplayServer {
+  if (cachedDisplayServer !== null) {
+    return cachedDisplayServer;
+  }
+
+  // Primary: Check WAYLAND_DISPLAY (per RESEARCH.md Pattern 1)
+  if (process.env.WAYLAND_DISPLAY) {
+    cachedDisplayServer = "wayland";
+    console.debug(
+      `[xclip] Detected Wayland via WAYLAND_DISPLAY=${process.env.WAYLAND_DISPLAY}`
+    );
+    return cachedDisplayServer;
+  }
+
+  // Secondary: Check XDG_SESSION_TYPE
+  const sessionType = process.env.XDG_SESSION_TYPE;
+  if (sessionType === "wayland") {
+    cachedDisplayServer = "wayland";
+    console.debug(
+      `[xclip] Detected Wayland via XDG_SESSION_TYPE=${sessionType}`
+    );
+    return cachedDisplayServer;
+  }
+
+  // Default to X11
+  cachedDisplayServer = "x11";
+  console.debug(`[xclip] Detected X11 (no Wayland indicators found)`);
+  return cachedDisplayServer;
+}
+
+/**
+ * Check if a command-line tool is available in the system PATH.
+ * @param toolName - Name of the tool to check (e.g., "xclip", "wl-copy")
+ * @returns true if tool is available, false otherwise
+ */
+export function isToolAvailable(toolName: string): boolean {
+  try {
+    const result = spawnSync("command", ["-v", toolName], {
+      shell: true,
+      encoding: "utf-8",
+    });
+    return result.status === 0;
+  } catch {
+    return false;
+  }
+}
 
 export function getCurrentPlatform(): Platform {
   const platform = process.platform;
@@ -80,7 +137,14 @@ export function runCommand(
         if (code === 0) {
           resolve(output);
         } else {
-          reject(errorMessage);
+          // Include both stdout and stderr in error message for better diagnostics
+          const errorParts = [];
+          if (errorMessage) errorParts.push(errorMessage);
+          if (output) errorParts.push(`stdout: ${output}`);
+          const fullError = errorParts.length > 0 
+            ? errorParts.join("\n") 
+            : `Command exited with code ${code} (no output)`;
+          reject(new Error(fullError));
         }
       }
     });
@@ -172,7 +236,36 @@ class WslShell implements IShell {
 
 class LinuxShell implements IShell {
   getClipboard(): IClipboard {
-    return new LinuxClipboard();
+    const displayServer = detectDisplayServer();
+
+    if (displayServer === "wayland") {
+      if (isToolAvailable("wl-copy")) {
+        console.debug("[xclip] Selected wl-copy backend for Wayland");
+        return new WaylandClipboard();
+      } else if (isToolAvailable("xclip")) {
+        console.debug(
+          "[xclip] Warning: Wayland detected but wl-copy not found, falling back to xclip (XWayland)"
+        );
+        console.debug(
+          "[xclip] For best Wayland support, install wl-clipboard: apt install wl-clipboard"
+        );
+        return new LinuxClipboard();
+      } else {
+        throw new Error(
+          "No clipboard tool available. Install wl-clipboard (recommended for Wayland) or xclip."
+        );
+      }
+    }
+
+    // X11
+    if (isToolAvailable("xclip")) {
+      console.debug("[xclip] Selected xclip backend for X11");
+      return new LinuxClipboard();
+    }
+
+    throw new Error(
+      "xclip not installed. Install with: apt install xclip (or pacman -S xclip)"
+    );
   }
   async runScript(script: string, parameters: string[]): Promise<string> {
     const shell = "sh";
