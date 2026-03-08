@@ -4,7 +4,7 @@ A crossplatform clipboard tools for copy & paste text, html and image.
 
 ## Requirements
 
-- `xclip` command be required (Linux)
+- `xclip`/`wl-clipboard` command be required (Linux)
 - `powershell` command be required (Win32)
 - `pbpaste` command be required (Mac)
 
