@@ -1,5 +1,5 @@
 import * as os from "os";
-import { spawn } from "child_process";
+import { spawn, spawnSync } from "child_process";
 import isWsl from "is-wsl";
 import { IClipboard } from "./clipboard_interface";
 import { Win10Clipboard } from "./clipboard/win10";
@@ -9,6 +9,23 @@ import { LinuxClipboard } from "./clipboard/linux";
 import { DarwinClipboard } from "./clipboard/darwin";
 
 export type Platform = "darwin" | "win32" | "win10" | "linux" | "wsl";
+
+/**
+ * Check if a command-line tool is available in the system PATH.
+ * @param toolName - Name of the tool to check (e.g., "xclip", "wl-copy")
+ * @returns true if tool is available, false otherwise
+ */
+export function isToolAvailable(toolName: string): boolean {
+  try {
+    const result = spawnSync("command", ["-v", toolName], {
+      shell: true,
+      encoding: "utf-8",
+    });
+    return result.status === 0;
+  } catch {
+    return false;
+  }
+}
 
 export function getCurrentPlatform(): Platform {
   const platform = process.platform;
@@ -80,7 +97,15 @@ export function runCommand(
         if (code === 0) {
           resolve(output);
         } else {
-          reject(errorMessage);
+          // Include both stdout and stderr in error message for better diagnostics
+          const errorParts = [];
+          if (errorMessage) errorParts.push(errorMessage);
+          if (output) errorParts.push(`stdout: ${output}`);
+          const fullError =
+            errorParts.length > 0
+              ? errorParts.join("\n")
+              : `Command exited with code ${code} (no output)`;
+          reject(new Error(fullError));
         }
       }
     });
